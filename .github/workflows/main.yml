@@ -1,10 +1,9 @@
-
 name: Daily Streak
 
 on:
   schedule:
-    # Every day at 12:05 AM Bangladesh time (18:05 UTC)
-    - cron: '5 18 * * *'
+    # Every day at 12:54 AM Bangladesh time (18:54 UTC)
+    - cron: '54 18 * * *'
 
   workflow_dispatch:
 
