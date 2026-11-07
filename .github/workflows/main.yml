@@ -3,8 +3,10 @@ name: Daily Streak
 
 on:
   schedule:
-    - cron: '12 5 * * *'
+    # Every day at 11:15 AM Bangladesh time (UTC+6)
+    - cron: '15 5 * * *'
 
+  # Allow manual execution
   workflow_dispatch:
 
 permissions:
