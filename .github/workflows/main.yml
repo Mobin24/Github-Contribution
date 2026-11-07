@@ -3,10 +3,9 @@ name: Daily Streak
 
 on:
   schedule:
-    # Every day at 11:15 AM Bangladesh time (UTC+6)
-    - cron: '15 5 * * *'
+    # Every day at 12:05 AM Bangladesh time (18:05 UTC)
+    - cron: '5 18 * * *'
 
-  # Allow manual execution
   workflow_dispatch:
 
 permissions:
@@ -27,12 +26,14 @@ jobs:
           USER_EMAIL: ${{ secrets.USER_EMAIL }}
           GITHUB_ACTOR: ${{ github.actor }}
         run: |
-          git config --global user.name "$GITHUB_ACTOR"
-          git config --global user.email "$USER_EMAIL"
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$USER_EMAIL"
 
-      - name: Create Empty Commit
+      - name: Create Empty Commit (Bangladesh Time)
+        env:
+          TZ: Asia/Dhaka
         run: |
-          git commit --allow-empty -m "Daily Streak: $(date +'%Y-%m-%d %H:%M:%S')"
+          git commit --allow-empty -m "Daily Streak: $(date +'%Y-%m-%d %H:%M:%S %Z')"
 
       - name: Push to Main
         run: |
