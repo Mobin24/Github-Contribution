@@ -1,10 +1,7 @@
-name: Daily Streak
-
+name: Streak
 on:
   schedule:
-    # Every day at 12:54 AM Bangladesh time (18:54 UTC)
-    - cron: '54 18 * * *'
-
+    - cron: '0 */1 * * *'
   workflow_dispatch:
 
 permissions:
@@ -13,27 +10,12 @@ permissions:
 jobs:
   commit:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: true
+      - uses: actions/checkout@v4
 
-      - name: Configure Git
-        env:
-          USER_EMAIL: ${{ secrets.USER_EMAIL }}
-          GITHUB_ACTOR: ${{ github.actor }}
+      - name: Run commit script
         run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$USER_EMAIL"
-
-      - name: Create Empty Commit (Bangladesh Time)
-        env:
-          TZ: Asia/Dhaka
-        run: |
-          git commit --allow-empty -m "Daily Streak: $(date +'%Y-%m-%d %H:%M:%S %Z')"
-
-      - name: Push to Main
-        run: |
-          git push origin HEAD:main
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${{ secrets.USER_EMAIL }}"
+          git commit --allow-empty -m "Streak grass: $(date +'%Y-%m-%d %H:%M:%S')"
+          git push origin main
